@@ -1,0 +1,214 @@
+body {
+  background-color: #333;
+  color: #aaa;
+}
+#root {
+  width: 100%;
+  margin: 0 auto auto auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.inputForm .inputsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputForm .inputsContainer .inputWrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0.5rem;
+  font-size: 1.5rem;
+}
+.inputForm input,
+.inputForm button {
+  margin: 1rem;
+  width: 80%;
+  border-radius: 5px;
+}
+
+.inputForm input {
+  margin: 0 1rem 1rem 1rem;
+}
+
+.inputForm input {
+  height: 2rem;
+  font-size: 1.5rem;
+}
+
+.displayArea {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "weatherIconContainer"
+    "today";
+  grid-column-gap: .5rem;
+  grid-row-gap: .5rem;
+  background-color: #aaa;
+  padding: .5rem;
+  border-radius: 5px;
+}
+
+.weatherIconContainer { grid-area: "weatherIconContainer" }
+.today {
+  grid-area: "today";
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.displayArea>div,
+.displayArea>img {
+  margin: auto;
+  width: 100%;
+  min-height: 2rem;
+  background-color: #333;
+}
+.weatherIconContainer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.weatherIcon {
+  /* height: 4rem; */
+  height: 9rem;
+}
+
+.graph {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 5rem;
+  margin: 2rem 0 0 0;
+}
+
+.graph .slice {
+  flex-grow: 1;
+  border-radius: 5px 5px 0 0;
+  border: 1px solid #000;
+  border-top: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.graph .slice.selected {
+  filter: brightness(200%);
+}
+
+.graph span.slice:not(.selected):hover {
+  filter: brightness(130%)
+}
+
+.graph .slice.currentTime {
+  border: 0.125rem solid #dd2;
+}
+
+.tempGraph {
+  background: #000;
+}
+
+.minTemp,
+.maxTemp,
+.dayLabel,
+.selectedSliceInfo {
+  position: absolute;
+  color: #fff;
+  text-shadow: 0px 0px 3px #000;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.minTemp {
+  bottom: 0;
+}
+
+.maxTemp {
+  top: 0;
+}
+
+.dayLabel {
+  top: -1.5rem;
+}
+
+.selectedSliceInfo {
+  top: 0;
+  right: 0;
+}
+
+.viewMenu {
+  display: flex;
+  width: 100%;
+  height: 4rem;
+  padding: 2rem 0 0 0;
+}
+.viewMenu>button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  background-color: #888;
+  color: #000;
+  text-shadow: 0px 0px 3px #fff;
+  font-size: 1.5rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  cursor: pointer;
+}
+.viewMenu>button:hover:not(.selected) {
+  background-color: #9a9;
+}
+.viewMenu>.selected {
+  background-color: var(--active-green);
+
+}
+
+@media screen and (min-width: 1280px) {
+  .inputForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .inputForm input {
+    margin: 1rem;
+  }
+
+  .inputForm .inputsContainer {
+    flex-direction: row;
+  }
+
+  .displayArea {
+    grid-template-areas:
+    "weatherIconContainer today"
+    "weatherIconContainer today ";
+  }
+
+  .inputForm .inputsContainer .inputWrapper {
+    flex-direction: row;
+  }
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
