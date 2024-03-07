@@ -42,15 +42,8 @@ function InputForm(props) {
         fetch(url)
           .then(res=>res.json())
           .then(res=>{
-              console.log('cityWeatherData: ', res)
-              const todayTemps = res.hourly.temperature_2m.slice(0,23);
-              const tomorrowTemps = res.hourly.temperature_2m.slice(24,47);
               const minTemp = Math.min(...res.hourly.temperature_2m)
               const maxTemp = Math.max(...res.hourly.temperature_2m);
-              const minTempToday = Math.min(...res.hourly.temperature_2m)
-              const maxTempToday = Math.max(...res.hourly.temperature_2m);
-              const minTempTomorrow = Math.min(...res.hourly.temperature_2m)
-              const maxTempTomorrow = Math.max(...res.hourly.temperature_2m);
 
               props.setCityWeatherData(res);
               props.setHourlyData(
