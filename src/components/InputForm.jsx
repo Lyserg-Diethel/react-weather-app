@@ -33,7 +33,7 @@ function InputForm(props) {
 
   function fetchWeatherDataForCity(city) {
     if (!city) {
-      alert("City not found! It may be misspelled or might not be in this dataset.");
+      alert("City or country not found! It may be misspelled or might not be in the available dataset.");
       return;
     }
     let latitude = city.lat;
