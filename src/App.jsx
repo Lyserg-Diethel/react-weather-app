@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState } from 'react'
 import locations from './data/locations.js'
 import InputForm from './components/InputForm.jsx'
