@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 function TemperatureGraphInner(props) {
     const [selectedSlice, setSelectedSlice] = useState(null);
 
+    useEffect(function(){
+        return () => {setSelectedSlice(null);}
+    }, [props.cityWeatherData]);
+
     function handleSliceClick(dayIndex, sliceIndex) {
         const day = props.dataByWeekDay[dayIndex];
 
