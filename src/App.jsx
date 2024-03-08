@@ -5,13 +5,9 @@ import DisplayArea from './components/DisplayArea.jsx'
 import './App.css'
 
 function App() {
-  const [citySelected, setCitySelected] = useState(false); //change to false by default
+  const [citySelected, setCitySelected] = useState(false);
   const [cityWeatherData, setCityWeatherData] = useState({})
-  const [hourlyData, setHourlyData] = useState( //Replace with context?
-  /** 
-   * 
-   * Idea: make a design like the Sinoptic one. Looks prettier than mine.
-   */
+  const [hourlyData, setHourlyData] = useState(
     {
       minTemp: null,
       maxTemp: null,
@@ -43,7 +39,8 @@ function App() {
           locations={locations}
           hourlyData={hourlyData}
           cityWeatherData={cityWeatherData}
-          />}
+          />
+        }
       </div>
     </>
   )

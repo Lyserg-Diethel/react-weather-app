@@ -9,7 +9,7 @@ const [viewMode, setViewMode] = useState("current");
 
     const weatherCode = props.cityWeatherData.current.weather_code;
     const weatherCodeText = weatherCodes[weatherCode];
-    const weatherCodeImage = `src/assets/wi-day-${props.cityWeatherData.current.weather_code}.svg`;
+    const weatherCodeImage = `./assets/icons/wi-day-${props.cityWeatherData.current.weather_code}.svg`;
     const currentTemp = props.cityWeatherData.current.temperature_2m;
     const currentTempUnit = props.cityWeatherData.current_units.temperature_2m;
     const currentWindSpeed = props.cityWeatherData.current.wind_speed_10m;
