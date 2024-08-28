@@ -9,6 +9,12 @@ body {
   text-align: center;
 }
 
+.inputForm {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .inputForm .inputsContainer {
   display: flex;
   flex-direction: column;
@@ -25,17 +31,20 @@ body {
   font-size: 1.5rem;
 }
 .inputForm input,
-.inputForm button {
+.inputForm button,
+.inputForm select {
   margin: 1rem;
   width: 80%;
   border-radius: 5px;
 }
 
-.inputForm input {
+.inputForm input,
+.inputForm select {
   margin: 0 1rem 1rem 1rem;
 }
 
-.inputForm input {
+.inputForm input,
+.inputForm select {
   height: 2rem;
   font-size: 1.5rem;
 }
@@ -179,7 +188,8 @@ body {
     align-items: center;
   }
 
-  .inputForm input {
+  .inputForm input,
+  .inputForm select {
     margin: 1rem;
   }
 
