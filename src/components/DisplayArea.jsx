@@ -45,9 +45,9 @@ const [metricMode, setMetricMode] = useState("temperature_2m");
             { viewMode === "weekly" && 
                 <>
                     <div className="metricModeButtons">
-                        <button className={`metricModeButton ${metricMode === "temperature_2m" ? "selected" : ""}`} onClick={()=>{setMetricMode("temperature_2m")}}>🌡️</button>
-                        <button className={`metricModeButton ${metricMode === "wind_speed_10m" ? "selected" : ""}`} onClick={()=>{setMetricMode("wind_speed_10m")}}>💨</button>
-                        <button className={`metricModeButton ${metricMode === "relative_humidity_2m" ? "selected" : ""}`} onClick={()=>{setMetricMode("relative_humidity_2m")}}>💧</button>
+                        <button className={`metricModeButton ${metricMode === "temperature_2m" ? "selected" : ""}`} onClick={()=>{setMetricMode("temperature_2m")}} title="Temperature">🌡️</button>
+                        <button className={`metricModeButton ${metricMode === "wind_speed_10m" ? "selected" : ""}`} onClick={()=>{setMetricMode("wind_speed_10m")}} title="Wind">💨</button>
+                        <button className={`metricModeButton ${metricMode === "relative_humidity_2m" ? "selected" : ""}`} onClick={()=>{setMetricMode("relative_humidity_2m")}} title="Humidity">💧</button>
                     </div>
                     <TemperatureGraphs cityWeatherData={props.cityWeatherData} hourlyData={props.hourlyData} currentTime={currentTime} metricMode={metricMode} />
                 </>

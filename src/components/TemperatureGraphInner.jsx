@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from 'react';
+import weatherCodes from '../data/weather_codes';
 
 function TemperatureGraphInner(props) {
     const [selectedSlice, setSelectedSlice] = useState(null);
@@ -118,14 +119,22 @@ function TemperatureGraphInner(props) {
             const currentTime = props.currentTime;
             const isSelected = selectedSlice && (sliceIndex === selectedSlice.sliceIndex);
             const isCurrentTimeSlice = currentTime.getHours() === sliceTime.getHours() && currentTime.getDate() === sliceTime.getDate();
+            const sliceWeatherCode = props.cityWeatherData.hourly.weather_code[sliceIndex];
+            const sliceWeatherIcon = `./assets/icons/wi-day-${sliceWeatherCode}.svg`
 
             return <span
-                key={`metricGraph-slice-${dayIndex}-${sliceIndex}`}
-                className={`slice${isSelected ? " selected" : ""} ${isCurrentTimeSlice && " currentTime"}`}
-                onClick={() => {handleSliceClick(dayIndex, sliceIndex)}}
-                title={`${metricUnit} ` + props.cityWeatherData.current_units[props.metricMode]}
-                style={{ height: heightPercent, backgroundColor: backgroundColour }}>
-            </span>
+                    key={`metricGraph-slice-${dayIndex}-${sliceIndex}`}
+                    className={`slice${isSelected ? " selected" : ""} ${isCurrentTimeSlice && " currentTime"}`}
+                    onClick={() => {handleSliceClick(dayIndex, sliceIndex)}}
+                    title={`${metricUnit} ` + props.cityWeatherData.current_units[props.metricMode]}
+                    style={{ height: heightPercent, backgroundColor: backgroundColour }}
+                    >
+                    <img 
+                        src={sliceWeatherIcon}
+                        alt={`${weatherCodes[sliceWeatherCode]}`} 
+                        style={{backgroundColor: backgroundColour }}
+                        />
+                </span>
         })
     });
         const utcDate = new Date(`${props.dayData.hours[0]}:00.817Z`)
