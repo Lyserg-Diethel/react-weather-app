@@ -139,6 +139,10 @@ body {
   display: inline;
 }
 
+.slice.badWeather {
+  border-bottom: 2px solid #F55;
+}
+
 .metricGraph {
   background: #000;
 }
@@ -146,7 +150,8 @@ body {
 .minMetric,
 .maxMetric,
 .dayLabel,
-.selectedSliceInfo {
+.selectedSliceInfo,
+.selectedSliceWeatherStatus {
   position: absolute;
   color: #fff;
   text-shadow: 0px 0px 3px #000;
@@ -168,6 +173,11 @@ body {
 
 .selectedSliceInfo {
   top: 0;
+  right: 0;
+}
+
+.selectedSliceWeatherStatus {
+  bottom: 0;
   right: 0;
 }
 

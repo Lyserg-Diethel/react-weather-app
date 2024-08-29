@@ -22,6 +22,7 @@ function TemperatureGraphInner(props) {
             temperature_2m: day.temperature_2m[sliceIndex],
             relative_humidity_2m: day.relative_humidity_2m[sliceIndex],
             wind_speed_10m: day.wind_speed_10m[sliceIndex],
+            weather_code: day.weather_code[sliceIndex],
             time: day.hours[sliceIndex],
             sliceIndex: sliceIndex
         })
@@ -119,19 +120,21 @@ function TemperatureGraphInner(props) {
             const currentTime = props.currentTime;
             const isSelected = selectedSlice && (sliceIndex === selectedSlice.sliceIndex);
             const isCurrentTimeSlice = currentTime.getHours() === sliceTime.getHours() && currentTime.getDate() === sliceTime.getDate();
-            const sliceWeatherCode = props.cityWeatherData.hourly.weather_code[sliceIndex];
+            const sliceWeatherCode = day.weather_code[sliceIndex];
             const sliceWeatherIcon = `./assets/icons/wi-day-${sliceWeatherCode}.svg`
+            const badWeatherFound = [0, 1, 2, 3].indexOf(sliceWeatherCode) === -1;
 
             return <span
                     key={`metricGraph-slice-${dayIndex}-${sliceIndex}`}
-                    className={`slice${isSelected ? " selected" : ""} ${isCurrentTimeSlice && " currentTime"}`}
+                    className={`slice${isSelected ? " selected" : ""} ${isCurrentTimeSlice && " currentTime"} ${badWeatherFound ? " badWeather" : ""}`}
                     onClick={() => {handleSliceClick(dayIndex, sliceIndex)}}
                     title={`${metricUnit} ` + props.cityWeatherData.current_units[props.metricMode]}
                     style={{ height: heightPercent, backgroundColor: backgroundColour }}
                     >
                     <img 
                         src={sliceWeatherIcon}
-                        alt={`${weatherCodes[sliceWeatherCode]}`} 
+                        alt={`${weatherCodes[sliceWeatherCode]}`}
+                        title={`${weatherCodes[sliceWeatherCode]}`}
                         style={{backgroundColor: backgroundColour }}
                         />
                 </span>
@@ -146,6 +149,7 @@ function TemperatureGraphInner(props) {
                 <div className="minMetric">{props.minMetric} {props.cityWeatherData.current_units[props.metricMode]}</div>
                 <div className="maxMetric">{props.maxMetric} {props.cityWeatherData.current_units[props.metricMode]}</div>
                 <div className="selectedSliceInfo">{selectedSlice ? selectedSlice[props.metricMode] : ""} {selectedSlice ? props.cityWeatherData.current_units[props.metricMode] : ""}</div>
+                <div className="selectedSliceWeatherStatus">{selectedSlice ? `${weatherCodes[selectedSlice.weather_code]}` : ""}</div>
 
                 {props.dayData.slices}
             </div>
