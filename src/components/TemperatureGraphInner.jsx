@@ -123,7 +123,7 @@ function TemperatureGraphInner(props) {
                 key={`metricGraph-slice-${dayIndex}-${sliceIndex}`}
                 className={`slice${isSelected ? " selected" : ""} ${isCurrentTimeSlice && " currentTime"}`}
                 onClick={() => {handleSliceClick(dayIndex, sliceIndex)}}
-                title={`${metricUnit} ` + props.cityWeatherData.current_units.temperature_2m}
+                title={`${metricUnit} ` + props.cityWeatherData.current_units[props.metricMode]}
                 style={{ height: heightPercent, backgroundColor: backgroundColour }}>
             </span>
         })

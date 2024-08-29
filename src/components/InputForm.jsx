@@ -71,28 +71,18 @@ function InputForm(props) {
     fetch(url)
       .then(res => res.json())
       .then(res => {
-        const minTemp = Math.min(...res.hourly.temperature_2m)
-        const maxTemp = Math.max(...res.hourly.temperature_2m);
-        const minWindSpeed = Math.min(...res.hourly.wind_speed_10m)
-        const maxWindSpeed = Math.max(...res.hourly.wind_speed_10m);
-        const minHumidity = Math.min(...res.hourly.relative_humidity_2m)
-        const maxHumidity = Math.max(...res.hourly.relative_humidity_2m);
-
         const min_temperature_2m = Math.min(...res.hourly.temperature_2m)
         const max_temperature_2m = Math.max(...res.hourly.temperature_2m);
         const min_wind_speed_10m = Math.min(...res.hourly.wind_speed_10m)
         const max_wind_speed_10m = Math.max(...res.hourly.wind_speed_10m);
         const min_relative_humidity_2m = Math.min(...res.hourly.relative_humidity_2m)
         const max_relative_humidity_2m = Math.max(...res.hourly.relative_humidity_2m);
-        console.log('res: ', res)
-        //Move the modes and variable names to a config file?
         res.current_units.relative_humidity_2m = "%";
         props.setCityWeatherData(res);
         props.setHourlyData(
           {
             min_temperature_2m: min_temperature_2m,
             max_temperature_2m: max_temperature_2m,
-            // tempRange: minTemp < 0 ? maxTemp - minTemp : maxTemp,
             min_wind_speed_10m: min_wind_speed_10m,
             max_wind_speed_10m: max_wind_speed_10m,
             min_relative_humidity_2m: min_relative_humidity_2m,
