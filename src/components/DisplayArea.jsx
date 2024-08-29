@@ -6,6 +6,8 @@ import TemperatureGraphs from './TemperatureGraphs';
 function DisplayArea(props) {
 
 const [viewMode, setViewMode] = useState("current");
+const [metricMode, setMetricMode] = useState("temperature_2m");
+
 
     const weatherCode = props.cityWeatherData.current.weather_code;
     const weatherCodeText = weatherCodes[weatherCode];
@@ -40,7 +42,16 @@ const [viewMode, setViewMode] = useState("current");
             </div>
             }
 
-            { viewMode === "weekly" && <TemperatureGraphs cityWeatherData={props.cityWeatherData} hourlyData={props.hourlyData} currentTime={currentTime}/>}
+            { viewMode === "weekly" && 
+                <>
+                    <div className="metricModeButtons">
+                        <button className={`metricModeButton ${metricMode === "temperature_2m" ? "selected" : ""}`} onClick={()=>{setMetricMode("temperature_2m")}}>🌡️</button>
+                        <button className={`metricModeButton ${metricMode === "wind_speed_10m" ? "selected" : ""}`} onClick={()=>{setMetricMode("wind_speed_10m")}}>💨</button>
+                        <button className={`metricModeButton ${metricMode === "relative_humidity_2m" ? "selected" : ""}`} onClick={()=>{setMetricMode("relative_humidity_2m")}}>💧</button>
+                    </div>
+                    <TemperatureGraphs cityWeatherData={props.cityWeatherData} hourlyData={props.hourlyData} currentTime={currentTime} metricMode={metricMode} />
+                </>
+            }
         </>
     )
 }

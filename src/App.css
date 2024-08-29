@@ -120,12 +120,12 @@ body {
   border: 0.125rem solid #dd2;
 }
 
-.tempGraph {
+.metricGraph {
   background: #000;
 }
 
-.minTemp,
-.maxTemp,
+.minMetric,
+.maxMetric,
 .dayLabel,
 .selectedSliceInfo {
   position: absolute;
@@ -135,11 +135,11 @@ body {
   pointer-events: none;
 }
 
-.minTemp {
+.minMetric {
   bottom: 0;
 }
 
-.maxTemp {
+.maxMetric {
   top: 0;
 }
 
@@ -176,9 +176,22 @@ body {
 .viewMenu>button:hover:not(.selected) {
   background-color: #9a9;
 }
-.viewMenu>.selected {
+.viewMenu>.selected,
+.metricModeButtons>.selected {
   background-color: var(--active-green);
+}
+.metricModeButtons>.selected {
+  text-shadow: 2px 3px 3px #000;
+}
 
+.metricModeButtons {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+.metricModeButton {
+  width: 5rem;
+  flex-grow: 0.2;
 }
 
 @media screen and (min-width: 1280px) {

@@ -3,35 +3,41 @@ import { useState, useEffect } from 'react';
 
 function TemperatureGraphInner(props) {
     const [selectedSlice, setSelectedSlice] = useState(null);
+    //Current supported modes are "relative_humidity_2m", "temperature_2m" and "wind_speed_10m".
+    const modes = {
+        relative_humidity_2m: "relative_humidity_2m",
+        temperature_2m: "temperature_2m",
+        wind_speed_10m: "wind_speed_10m",
+    }
 
     useEffect(function(){
         return () => {setSelectedSlice(null);}
-    }, [props.cityWeatherData]);
+    }, [props.cityWeatherData, props.metricMode]);
 
     function handleSliceClick(dayIndex, sliceIndex) {
         const day = props.dataByWeekDay[dayIndex];
 
         setSelectedSlice({
-            temp: day.temp[sliceIndex],
-            humidity: day.humidity[sliceIndex],
-            windSpeed: day.windSpeed[sliceIndex],
+            temperature_2m: day.temperature_2m[sliceIndex],
+            relative_humidity_2m: day.relative_humidity_2m[sliceIndex],
+            wind_speed_10m: day.wind_speed_10m[sliceIndex],
             time: day.hours[sliceIndex],
             sliceIndex: sliceIndex
         })
     }
 
     function calculatePercentageInRange(min, single, max) {
-        // Ensure x is the minimum value and z is the maximum value
+        // Ensure min is the minimum value and max is the maximum value
         if (min > max) {
             let temp = min;
             min = max;
             max = temp;
         }
 
-        // Calculate the range between x and z
+        // Calculate the range between min and max
         let range = max - min;
 
-        // Calculate the distance between y and min
+        // Calculate the distance between X and min
         let distanceFromMin = single - min;
 
         // Calculate the percentage
@@ -43,47 +49,81 @@ function TemperatureGraphInner(props) {
         return percentage.toFixed(2);
     }
 
-    function getTempRangeColour(temperature) {
-        let temperatureColour = "#555";
+    function getRangeColour(metricValue) {
+        let metricColour = "#555";
 
-        if (props.cityWeatherData.current_units.temperature_2m === "°C") {
-            if (temperature < -10) {
-                temperatureColour = "#339"
-            } else if (temperature < 0) {
-                temperatureColour = "#559"
-            } else if (temperature < 10) {
-                temperatureColour = "#557"
-            } else if (temperature < 20) {
-                temperatureColour = "#575"
-            } else if (temperature < 30) {
-                temperatureColour = "#775"
-            } else if (temperature < 40) {
-                temperatureColour = "#755"
-            } else if (temperature >= 50) {
-                temperatureColour = "#955"
+        if (props.metricMode === modes.temperature_2m && props.cityWeatherData.current_units.temperature_2m === "°C") {
+            if (metricValue < -10) {
+                metricColour = "#339"
+            } else if (metricValue < 0) {
+                metricColour = "#559"
+            } else if (metricValue < 10) {
+                metricColour = "#557"
+            } else if (metricValue < 20) {
+                metricColour = "#575"
+            } else if (metricValue < 30) {
+                metricColour = "#775"
+            } else if (metricValue < 40) {
+                metricColour = "#755"
+            } else if (metricValue >= 50) {
+                metricColour = "#955"
             }
-
-            return temperatureColour;
+        } else if (props.metricMode === modes.relative_humidity_2m) {
+            if (metricValue < 5) {
+                metricColour = "#339"
+            } else if (metricValue < 20) {
+                metricColour = "#559"
+            } else if (metricValue < 30) {
+                metricColour = "#557"
+            } else if (metricValue < 60) {
+                metricColour = "#575"
+            } else if (metricValue < 70) {
+                metricColour = "#775"
+            } else if (metricValue < 80) {
+                metricColour = "#755"
+            } else if (metricValue >= 81) {
+                metricColour = "#955"
+            }
+        }  else if (props.metricMode === modes.wind_speed_10m) {
+            if (metricValue < 5) {
+                metricColour = "#339"
+            } else if (metricValue < 11) {
+                metricColour = "#559"
+            } else if (metricValue < 19) {
+                metricColour = "#557"
+            } else if (metricValue < 28) {
+                metricColour = "#575"
+            } else if (metricValue < 49) {
+                metricColour = "#775"
+            } else if (metricValue < 74) {
+                metricColour = "#755"
+            } else if (metricValue >= 75) {
+                metricColour = "#955"
+            }
         }
+        return metricColour;
     }
 
 
     //Generate graph slices.
     props.dataByWeekDay.map((day, dayIndex) => {
-        day.slices = day.temp.map((temperature, sliceIndex) => {
-            const heightPercent = `${calculatePercentageInRange(props.hourlyData.minTemp, temperature, props.hourlyData.maxTemp)}%`;
-            const backgroundColour = getTempRangeColour(temperature);
+        day.slices = day[props.metricMode].map((metricUnit, sliceIndex) => {
+            let minMetricName, maxMetricName;
+            minMetricName = `min_${props.metricMode}`;
+            maxMetricName= `max_${props.metricMode}`;
+
+            const heightPercent = `${calculatePercentageInRange(props.hourlyData[minMetricName], metricUnit, props.hourlyData[maxMetricName])}%`;
+            const backgroundColour = getRangeColour(metricUnit);
             const sliceTime = new Date(day.hours[sliceIndex])
             const currentTime = props.currentTime;
             const isSelected = selectedSlice && (sliceIndex === selectedSlice.sliceIndex);
             const isCurrentTimeSlice = currentTime.getHours() === sliceTime.getHours() && currentTime.getDate() === sliceTime.getDate();
 
-
             return <span
-                key={`tempGraph-slice-${dayIndex}-${sliceIndex}`}
+                key={`metricGraph-slice-${dayIndex}-${sliceIndex}`}
                 className={`slice${isSelected ? " selected" : ""} ${isCurrentTimeSlice && " currentTime"}`}
                 onClick={() => {handleSliceClick(dayIndex, sliceIndex)}}
-                title={`${temperature} ` + props.cityWeatherData.current_units.temperature_2m}
+                title={`${metricUnit} ` + props.cityWeatherData.current_units.temperature_2m}
                 style={{ height: heightPercent, backgroundColor: backgroundColour }}>
             </span>
         })
@@ -92,11 +132,11 @@ function TemperatureGraphInner(props) {
         const dateString = utcDate.toGMTString().match(/.+\d{4}/)[0];
 
         return <>
-            <div key={`tempGraph-${props.index}`} className="tempGraph graph" style={{ before: { content: "A" } }}>
+            <div key={`metricGraph-${props.index}`} className="metricGraph graph" style={{ before: { content: "A" } }}>
                 <div className="dayLabel">{dateString}</div>
-                <div className="minTemp">{Math.min(...props.dayData.temp)} {props.cityWeatherData.current_units.temperature_2m}</div>
-                <div className="maxTemp">{Math.max(...props.dayData.temp)} {props.cityWeatherData.current_units.temperature_2m}</div>
-                <div className="selectedSliceInfo">{selectedSlice ? selectedSlice.temp : ""} {selectedSlice ? props.cityWeatherData.current_units.temperature_2m : ""}</div>
+                <div className="minMetric">{props.minMetric} {props.cityWeatherData.current_units[props.metricMode]}</div>
+                <div className="maxMetric">{props.maxMetric} {props.cityWeatherData.current_units[props.metricMode]}</div>
+                <div className="selectedSliceInfo">{selectedSlice ? selectedSlice[props.metricMode] : ""} {selectedSlice ? props.cityWeatherData.current_units[props.metricMode] : ""}</div>
 
                 {props.dayData.slices}
             </div>

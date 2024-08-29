@@ -13,11 +13,6 @@ function App() {
     {
       minTemp: null,
       maxTemp: null,
-      minTempToday: null,
-      maxTempToday: null,
-      minTempTomorrow: null,
-      maxTempTomorrow: null,
-      tempRange: null,
       minWindSpeed: null,
       maxWindSpeed: null,
       temperature_2m: null

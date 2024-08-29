@@ -9,17 +9,17 @@ function TemperatureGraphs(props) {
 
         for (let i = 0; i < 7; i++) {
             let day = {
-                temp: [],
+                temperature_2m: [],
                 hours: [],
-                windSpeed: [],
-                humidity: [],
+                wind_speed_10m: [],
+                relative_humidity_2m: [],
             };
 
             for (let j = 0; j < 24; j++) {
                 day.hours.push(hourlyData.time[j + (i * 24)])
-                day.temp.push(hourlyData.temperature_2m[j + (i * 24)])
-                day.windSpeed.push(hourlyData.wind_speed_10m[j + (i * 24)])
-                day.humidity.push(hourlyData.relative_humidity_2m[j + (i * 24)])
+                day.temperature_2m.push(hourlyData.temperature_2m[j + (i * 24)])
+                day.wind_speed_10m.push(hourlyData.wind_speed_10m[j + (i * 24)])
+                day.relative_humidity_2m.push(hourlyData.relative_humidity_2m[j + (i * 24)])
             }
 
             week.push(day)
@@ -37,6 +37,9 @@ function TemperatureGraphs(props) {
                 cityWeatherData={props.cityWeatherData}
                 dataByWeekDay={dataByWeekDay}
                 currentTime={props.currentTime}
+                metricMode={props.metricMode}
+                minMetric={Math.min(...day[props.metricMode])}
+                maxMetric={Math.max(...day[props.metricMode])}
             />
         
     })
