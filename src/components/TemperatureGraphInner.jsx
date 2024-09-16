@@ -67,7 +67,7 @@ function TemperatureGraphInner(props) {
                 metricColour = "#775"
             } else if (metricValue < 40) {
                 metricColour = "#755"
-            } else if (metricValue >= 50) {
+            } else if (metricValue >= 41) {
                 metricColour = "#955"
             }
         } else if (props.metricMode === modes.relative_humidity_2m) {
