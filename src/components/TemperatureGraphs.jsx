@@ -8,6 +8,7 @@ function TemperatureGraphs(props) {
         const week = [];
 
         for (let i = 0; i < 7; i++) {
+            const dayStartIndex = i * 24;
             let day = {
                 temperature_2m: [],
                 hours: [],
@@ -17,11 +18,12 @@ function TemperatureGraphs(props) {
             };
 
             for (let j = 0; j < 24; j++) {
-                day.hours.push(hourlyData.time[j + (i * 24)])
-                day.weather_code.push(hourlyData.weather_code[j + (i * 24)])
-                day.temperature_2m.push(hourlyData.temperature_2m[j + (i * 24)])
-                day.wind_speed_10m.push(hourlyData.wind_speed_10m[j + (i * 24)])
-                day.relative_humidity_2m.push(hourlyData.relative_humidity_2m[j + (i * 24)])
+                const hourIndex = j + dayStartIndex
+                day.hours.push(hourlyData.time[hourIndex])
+                day.weather_code.push(hourlyData.weather_code[hourIndex])
+                day.temperature_2m.push(hourlyData.temperature_2m[hourIndex])
+                day.wind_speed_10m.push(hourlyData.wind_speed_10m[hourIndex])
+                day.relative_humidity_2m.push(hourlyData.relative_humidity_2m[hourIndex])
             }
 
             week.push(day)
